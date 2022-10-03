@@ -28,8 +28,11 @@
                     </ul>
                 </li>
 
-                <a href="#"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Déconnexion</button></a>
-                <a href="#"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Connexion</button></a>
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Déconnexion</button></a>
+            {% else %}
+                <a href="{{ path('app_login') }}"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Connexion</button></a>
+            {% endif %}
         </div>
     </div>
 </nav>
