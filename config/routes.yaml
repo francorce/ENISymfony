@@ -4,3 +4,6 @@ controllers:
 app_connexion:
     path: /
     controller: App\Controller\ConnexionController::index
+app_logout:
+    path: /logout
+    methods: GET
