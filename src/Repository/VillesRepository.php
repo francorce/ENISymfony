@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Villes;
+use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Villes>
+ * @extends ServiceEntityRepository<Ville>
  *
- * @method Villes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Villes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Villes[]    findAll()
- * @method Villes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Ville|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Ville|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Ville[]    findAll()
+ * @method Ville[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class VillesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Villes::class);
+        parent::__construct($registry, Ville::class);
     }
 
-    public function save(Villes $entity, bool $flush = false): void
+    public function save(Ville $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class VillesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Villes $entity, bool $flush = false): void
+    public function remove(Ville $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class VillesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Villes[] Returns an array of Villes objects
+//     * @return Ville[] Returns an array of Ville objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class VillesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Villes
+//    public function findOneBySomeField($value): ?Ville
 //    {
 //        return $this->createQueryBuilder('v')
 //            ->andWhere('v.exampleField = :val')
