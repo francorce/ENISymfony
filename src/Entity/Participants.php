@@ -31,6 +31,9 @@ class Participants
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $mdp = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Participants
     public function setActif(?bool $actif): self
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getMdp(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function setMdp(string $mdp): self
+    {
+        $this->mdp = $mdp;
 
         return $this;
     }
