@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConnexionController!{% endblock %}
+
+{% block login %}
+
+    <form action="{{ path('app_connexion') }}" method="post">
+        <div class="container">
+            <label for="username">User:</label>
+            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
+
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="_password"/>
+
+
+            <input type="hidden" name="_target_path" value="/#"/>
+
+            <button type="submit" class="btn btn-dark mt-3">login</button>
+        </div>
+
+    </form>
+
+{% endblock %}
