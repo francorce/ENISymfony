@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block accueil %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello World! ✅</h1>
+
+    <table class="table table-dark">
+        <tbody>
+        <tr>
+            <td>Nom de la sortie</td>
+            <td>Date de la sortie</td>
+            <td>Clôture</td>
+            <td>Inscrits/places</td>
+            <td>Etat</td>
+            <td>Inscrit</td>
+            <td>Organisateur</td>
+            <td>Actions</td>
+        </tr>
+        {% for sortie in sorties %}
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.datedebut | date("d/m/Y")}}</td>
+            <td>{{ sortie.datecloture | date("d/m/Y") }}</td>
+            <td>{{ sortie.nbinscriptionsmax }}</td>
+            <td>{{ sortie.etatsortie }}</td>
+            <td>X</td>
+            <td>Organisateur 1</td>
+            <td>Actions</td>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}
