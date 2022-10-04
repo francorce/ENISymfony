@@ -28,6 +28,16 @@ class ParticipantController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/afficherParticipant/{id}', name: 'app_admin_afficherParticipant', requirements: ['id' => '\d+'])]
+    public function affiche(ParticipantRepository $participantRepository, $id = null): Response
+    {
+        $participants = $participantRepository->findAll();
+
+        return $this->render('admin/participant/afficherParticipant.html.twig', [
+            "participants" => $participants,
+        ]);
+    }
+
     #[Route('/admin/participant/supprimer/{id}', name: 'app_admin_participant_supprimer', requirements: ['id' => '\d+'])]
     public function supprimer(ParticipantRepository $participantRepository,  Request $request, EntityManagerInterface $entityManager, $id = null): Response
     {
