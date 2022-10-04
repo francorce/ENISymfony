@@ -34,6 +34,10 @@ class Site
     {
         return $this->id;
     }
+    public function __toString()
+    {
+        return $this->nom_site;
+    }
 
     public function getNomSite(): ?string
     {

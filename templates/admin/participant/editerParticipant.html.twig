@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello SiteController !{% endblock %}
+
+{% block contenu %}
+    <div class="container">
+<h1>Ajouter un Participant</h1> <br>
+        {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/>#}
+        {{ form_start(formulaireParticipant) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(formulaireParticipant.nom) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireParticipant.prenom) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireParticipant.telephone) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireParticipant.email) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireParticipant.pseudo) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireParticipant.photo) }}
+            </div>
+        </div>
+<h3>A quel campus est relié ce participant ?</h3>
+        {{ form_rest(formulaireParticipant) }}
+
+        {% if app.request.get('_route') == 'app_admin_participant_ajouter' %}
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Ajouter</button>
+            </div>
+        {% else %}
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier</button>
+            </div>
+        {% endif %}
+
+        {{ form_end(formulaireParticipant) }}
+    </div>
+{% endblock %}

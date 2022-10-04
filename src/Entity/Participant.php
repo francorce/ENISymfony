@@ -84,6 +84,11 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+//    //__toString() the role field
+//    public function __toString()
+//    {
+//        return $this->roles;
+//    }
     /**
      * A visual identifier that represents this user.
      *
