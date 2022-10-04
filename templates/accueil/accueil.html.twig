@@ -21,29 +21,30 @@
     </select>
 
     <table class="table table-dark">
-        <tbody>
+        <thead>
         <tr>
             <td>Nom de la sortie</td>
             <td>Date de la sortie</td>
             <td>Clôture</td>
             <td>Inscrits/places</td>
-            <td>Etat</td>
             <td>Inscrit</td>
             <td>Organisateur</td>
             <td>Actions</td>
         </tr>
+        </thead>
         {% for sortie in sorties %}
+        <tbody>
+        <tr>
             <td>{{ sortie.nom }}</td>
             <td>{{ sortie.datedebut | date("d/m/Y")}}</td>
             <td>{{ sortie.datecloture | date("d/m/Y") }}</td>
             <td>{{ sortie.nbinscriptionsmax }}</td>
-            <td>{{ sortie.etatsortie }}</td>
             <td>X</td>
             <td>Organisateur 1</td>
             <td>Actions</td>
-        {% endfor %}
-
+        </tr>
         </tbody>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}
