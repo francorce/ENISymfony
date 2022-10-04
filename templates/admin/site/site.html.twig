@@ -1,20 +1,58 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello SiteController!{% endblock %}
+{% block title %}Hello SiteController !{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block contenu %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/franc/Documents/projet/ENISymfony/src/Controller/Admin/SiteController.php'|file_link(0) }}">src/Controller/Admin/SiteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/franc/Documents/projet/ENISymfony/templates/admin/site/index.html.twig'|file_link(0) }}">templates/admin/site/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container">
+        <h1>Listes des Sites</h1>
+        <input type="text" id="search" onkeyup="myFunction()" placeholder="Chercher sites">
+        {% if sites is not empty %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                {% for site in sites %}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ site.id }}</th>
+                        <td>{{ site.NomSite }}</td>
+                        <td>
+                            <a href="{{ path('app_admin_site_modifier', {id:site.id }) }}"
+                               class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('app_admin_site_supprimer', {id:site.id}) }}"
+                               class="btn btn-danger btn-sm"  onclick="return confirm('Êtes vous sur de supprimer ');">Supprimer</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <h1>Il n'y a aucun site à afficher :) !</h1>
+        {% endif %}
+
+        <div class="example-wrapper">
+            <a href="{{ path('app_admin_site_ajouter') }}">
+                <button style="margin: 10px;" class="btn btn-success" href="" type="submit">Ajouter un site</button>
+            </a>
+        </div>
+    </div>
 {% endblock %}

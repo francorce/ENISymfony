@@ -2,19 +2,59 @@
 
 {% block title %}Hello VilleController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block contenu %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/franc/Documents/projet/ENISymfony/src/Controller/VilleController.php'|file_link(0) }}">src/Controller/VilleController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/franc/Documents/projet/ENISymfony/templates/ville/index.html.twig'|file_link(0) }}">templates/ville/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container">
+<h1>Listes des villes</h1>
+        <input type="text" id="search" onkeyup="myFunction()" placeholder="Chercher villes">
+        {% if villes is not empty %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Code postal</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                {% for ville in villes %}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ ville.id }}</th>
+                        <td>{{ ville.NomVille }}</td>
+                        <td>{{ ville.CodePostal }} </td>
+                        <td>
+                            <a href="{{ path('app_admin_ville_modifier', {id:ville.id }) }}"
+                               class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('app_admin_ville_supprimer', {id:ville.id}) }}"
+                               class="btn btn-danger btn-sm"  onclick="return confirm('Êtes vous sur de supprimer ');">Supprimer</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <h1>Il n'y a aucune ville à afficher :) !</h1>
+        {% endif %}
+
+        <div class="example-wrapper">
+            <a href="{{ path('app_admin_ville_ajouter') }}">
+                <button style="margin: 10px;" class="btn btn-success" href="" type="submit">Ajouter une ville</button>
+            </a>
+        </div>
+    </div>
 {% endblock %}

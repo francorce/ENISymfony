@@ -24,6 +24,20 @@
           integrity="sha512-Mk4n0eeNdGiUHlWvZRybiowkcu+Fo2t4XwsJyyDghASMeFGH6yUXcdDI3CKq12an5J8fq4EFzRVRdbjerO3RmQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+    <script>
+        function myFunction() {
+            $(document).ready(function(){
+                $("#search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("table td").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        }
+
+
+    </script>
 </head>
 
 <body id="page-top">
@@ -54,13 +68,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ path('app_admin_site') }}">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Liste des Mémoires</span>
+                <span>Liste des Sites</span>
             </a>
 {#            {% if is_granted('ROLE_SUPER_AGENT') %}#}
                 <hr>
                 <a class="nav-link collapsed" href="{{ path('app_admin_ville') }}">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Liste des agents</span>
+                    <span>Liste des Villes</span>
                 </a>
 {#            {% endif %}#}
             <hr>
