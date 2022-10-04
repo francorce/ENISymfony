@@ -46,6 +46,12 @@ class Ville
         return $this;
     }
 
+    //toString
+    public function __toString()
+    {
+        return $this->nom_ville;
+    }
+
     public function getCodePostal(): ?int
     {
         return $this->code_postal;

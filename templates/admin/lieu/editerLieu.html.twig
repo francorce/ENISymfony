@@ -1,0 +1,37 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello SiteController !{% endblock %}
+
+{% block contenu %}
+    <div class="container">
+<h1>Ajouter un lieu</h1> <br>
+        {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/>#}
+        {{ form_start(formulaireLieu) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(formulaireLieu.rue) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireLieu.latitude) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireLieu.longitude) }}
+            </div>
+        </div>
+
+        <h3 class="mt-4">Dans quel ville ? </h3>
+        {{ form_rest(formulaireLieu) }}
+        <br>
+        {% if app.request.get('_route') == 'app_admin_lieu_ajouter' %}
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Ajouter</button>
+            </div>
+        {% else %}
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier</button>
+            </div>
+        {% endif %}
+
+        {{ form_end(formulaireLieu) }}
+    </div>
+{% endblock %}
