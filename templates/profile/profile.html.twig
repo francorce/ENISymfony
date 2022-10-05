@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block contenu %}
+<form action="{{ path('app_profile') }}" method="get">
+    <div class="container">
+        {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/> #}
+        <div>
+            {% if participants is not null %}
+                <h1> {{ participants.pseudo }}</h1>
+                <label>Prénom : {{ participants.prenom }}</label><br>
+                <label>Nom : {{ participants.nom }}</label><br>
+                <label>Téléphone : {{ participants.telephone }}</label><br>
+                <label>Email : {{ participants.email }}</label><br>
+                <label>{{ participants.photo }}</label><br>
+                <a href="{{ path('app_accueil') }}"class="btn btn-primary">Retour</a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}
