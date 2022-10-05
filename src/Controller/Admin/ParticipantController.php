@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Bien;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
@@ -31,7 +32,8 @@ class ParticipantController extends AbstractController
     #[Route('/admin/afficherParticipant/{id}', name: 'app_admin_afficherParticipant', requirements: ['id' => '\d+'])]
     public function affiche(ParticipantRepository $participantRepository, $id = null): Response
     {
-        $participants = $participantRepository->findBy($id);
+
+        $participants = $participantRepository->find($id);
 
         return $this->render('admin/participant/afficherParticipant.html.twig', [
             "participants" => $participants,

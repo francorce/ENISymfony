@@ -3,19 +3,19 @@
 {% block title %}Hello SiteController !{% endblock %}
 
 {% block contenu %}
+<form action="{{ path('app_admin_afficherParticipant') }}" method="get">
     <div class="container">
-        <h1></h1> <br>
         {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/> #}
         <div>
-            {% for participant in participants %}
-                <h1> {{ participant.pseudo }}</h1>
-                {{ participant.prenom }}<br>
-                {{ participant.nom }}<br>
-                {{ participant.telephone }}<br>
-                {{ participant.email }}<br>
-                {{ participant.photo }}<br>
-                <a href="{{ path('app_admin_participant') }}" class="btn btn-primary">Retour</a>
-            {% endfor %}
+            {% if participants is not null %}
+            <h1> {{ participants.pseudo }}</h1>
+            <label>Prénom : {{ participants.prenom }}</label><br>
+            <label>Nom : {{ participants.nom }}</label><br>
+            <label>Téléphone : {{ participants.telephone }}</label><br>
+            <label>Email : {{ participants.email }}</label><br>
+            <label>{{ participants.photo }}</label><br>
+            <a href="{{ path('app_admin_participant') }}"class="btn btn-primary">Retour</a>
+            {% endif %}
         </div>
 
     </div>
