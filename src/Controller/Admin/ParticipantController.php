@@ -73,7 +73,7 @@ class ParticipantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $lieu = $form->getData();
 
-
+            $participant->setPassword($hasher->hashPassword($participant, $participant->getPassword()));
             $participant->setRoles(['ROLE_USER']);
 
             $entityManager->persist($lieu);

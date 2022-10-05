@@ -49,6 +49,7 @@ class Sortie
     private ?Site $etablissement = null;
 
     #[ORM\ManyToOne(inversedBy: 'organisateur')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Participant $participant = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'estInscrit')]
@@ -182,6 +183,12 @@ class Sortie
         $this->etablissement = $etablissement;
 
         return $this;
+    }
+
+    //toString participant
+    public function __toString()
+    {
+        return $this->participant;
     }
 
     public function getParticipant(): ?Participant

@@ -96,7 +96,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -225,6 +225,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         $this->estRattache = $estRattache;
 
         return $this;
+    }
+
+//toString Organisateur
+    public function __toString()
+    {
+        return $this->nom.' '.$this->prenom;
     }
 
     /**
