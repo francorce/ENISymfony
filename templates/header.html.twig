@@ -2,37 +2,40 @@
 
 <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
-        <a class="navbar-brand text-light" href="#">Sortir.com</a>
+        <a class="navbar-brand text-light" href="/">Sortir.com</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active text-light" aria-current="page" href="#">Page</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Utilisateurs</a>
-                </li>
-            </ul>
 
-                <li class="nav-item dropdown" style="list-style-type: none;">
+                <li class="nav-item dropdown me-auto " style="list-style-type: none;">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        Options
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ path('app_admin_site') }}"><button style="margin: 10px;" class="btn btn-outline-success" href="" type="submit">Admin</button></a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <ul class="dropdown-menu ">
+                        <li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_admin_site') }}" style="margin: 10px;" class="btn btn-outline-success">Admin</a>
+                            {% else %}
+                            {{ '' }}
+                            {% endif %}
+                        </li>
+                        <li>
+
+                            {% if app.user %}
+                                <a class="dropdown-item" href="{{ path('app_profile')}}/{{ app.user.id }} ">Profile</a>
+                            {% else %}
+                            <br>
+                            {% endif %}
+                        </li>
                     </ul>
                 </li>
 
 
             {% if app.user %}
-                <a href="{{ path('app_logout') }}"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Déconnexion</button></a>
+                <a href="{{ path('app_logout') }}"><button style="margin: 10px;" class="btn btn-outline-success" type="submit">Déconnexion</button></a>
             {% else %}
-                <a href="{{ path('app_login') }}"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Connexion</button></a>
+                <a href="{{ path('app_login') }}"><button style="margin: 10px;" class="btn btn-outline-success" type="submit">Connexion</button></a>
             {% endif %}
         </div>
     </div>

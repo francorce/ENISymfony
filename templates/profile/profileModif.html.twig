@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block contenu %}
+
+    <div class="container">
+        <h1>Mon profil</h1>
+        {{ form_start(formulaireProfile) }}
+        <div class="row">
+
+            <div class="col">
+                {{ form_row(formulaireProfile.pseudo) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireProfile.prenom) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireProfile.nom) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireProfile.telephone) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireProfile.email) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireProfile.photo) }}
+            </div>
+
+        </div>
+        {{ form_row(formulaireProfile.password) }}
+        {{ form_rest(formulaireProfile) }}
+
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier</button>
+            </div>
+
+
+        {{ form_end(formulaireProfile) }}
+    </div>
+
+{% endblock %}
