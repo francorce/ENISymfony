@@ -36,7 +36,14 @@ class ProfileController extends AbstractController
             $lieu = $form->getData();
 
             $participants->setPassword($hasher->hashPassword($participants, $participants->getPassword()));
-            $participants->setRoles(['ROLE_USER']);
+
+            if(!$this->isGranted('ROLE_ADMIN')){
+                $participants->setRoles(['ROLE_USER']);
+            }
+            else{
+                $participants->setRoles(['ROLE_ADMIN']);
+            }
+
 
             $entityManager->persist($lieu);
             $entityManager->flush();
