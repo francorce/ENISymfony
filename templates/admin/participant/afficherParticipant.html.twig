@@ -13,7 +13,7 @@
             <label>Nom : {{ participants.nom }}</label><br>
             <label>Téléphone : {{ participants.telephone }}</label><br>
             <label>Email : {{ participants.email }}</label><br>
-            <label>{{ participants.photo }}</label><br>
+            <label><img class="" src="{{ asset('img/') }}{{ participants.photo }}"></label><br>
             <a href="{{ path('app_admin_participant') }}"class="btn btn-primary">Retour</a>
             {% endif %}
         </div>

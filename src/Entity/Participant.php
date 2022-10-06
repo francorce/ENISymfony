@@ -61,6 +61,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $partagePhoto = null;
+
     public function __construct()
     {
         $this->organisateur = new ArrayCollection();
@@ -295,6 +298,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function isPartagePhoto(): ?bool
+    {
+        return $this->partagePhoto;
+    }
+
+    public function setPartagePhoto(?bool $partagePhoto): self
+    {
+        $this->partagePhoto = $partagePhoto;
 
         return $this;
     }

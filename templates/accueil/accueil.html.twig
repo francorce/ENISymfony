@@ -46,16 +46,20 @@
                 <tr>
                     <td>{{ sortie.id }}</td>
                     <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.datedebut | date("d/m/Y") }}</td>
+                    <td>{{ sortie.datedebut | date("d/m/Y H:m") }}</td>
                     <td>{{ sortie.datecloture | date("d/m/Y") }}</td>
-                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.etat }}</td>
-                    <td>X</td>
-                    <td>{{ sortie.participant }}</td>
-                    <td><a
-                                href="{{ path('app_sortie_detail', {'id': sortie.id}) }}"
-                                class="btn btn-primary btn-sm">Afficher
-                        </a>
+                    <td>
+                        {# {% if app.user == %} #}
+                        {#                            {{ app.user.prenom }} #}
+                        {#                        {% else %} #}
+                        {#                            {{ '' }} #}
+                        {#                        {% endif %} #}
+                    </td>
+                    <td><a href="{{ path('app_profile', {id:sortie.participant.id }) }}">{{ sortie.participant }}</a>
+                    </td>
+                    <td>
                         {% if sortie.etat == 'En Création' %}
                             <a
                                     href="{{ path('app_sortie_modifier', {'id': sortie.id}) }}"
@@ -63,10 +67,28 @@
                             </a>
                             <a
                                     href="{{ path('app_sortie_publier', {'id': sortie.id}) }}"
-                                    class="btn btn-primary btn-sm">Publier
+                                    class="btn btn-success btn-sm">Publier
+                            </a>
+                        {% else %}
+                            <a
+                                    href="{{ path('app_sortie_detail', {'id': sortie.id}) }}"
+                                    class="btn btn-primary btn-sm">Afficher
                             </a>
                         {% endif %}
 
+                        {% if sortie.participants|length == 0 and sortie.etat == 'Ouvert' %}
+                            <a
+                                    href="{{ path('app_sortie_annuler', {'id': sortie.id}) }}"
+                                    class="btn btn-danger btn-sm">Annuler
+                            </a>
+                        {% endif %}
+
+                        {% if sortie.participants|length < sortie.nbInscriptionsMax and sortie.etat == 'Ouvert' %}
+                            <a
+                                    href="{{ path('app_sortie_inscription', {'id': sortie.id}) }}"
+                                    class="btn btn-light btn-sm">S'inscrire
+                            </a>
+                        {% endif %}
                     </td>
 
                 </tr>

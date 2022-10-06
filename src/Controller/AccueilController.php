@@ -15,16 +15,15 @@ class AccueilController extends AbstractController
 {
 
     #[Route('/accueil', name: 'app_accueil')]
-    public function index(SortiesRepository     $sortiesRepository,
-                          SitesRepository       $sitesRepository,
-                          EtatRepository        $etatRepository,
-                          LieuxRepository       $lieuxRepository,
-                          ParticipantRepository $participantRepository): Response
+    public function index(SortiesRepository $sortiesRepository, SitesRepository $sitesRepository, EtatRepository $etatRepository, LieuxRepository $lieuxRepository, ParticipantRepository $participantRepository): Response
     {
-
         //if user not logged, redirect to login page
-        if (!$this->getUser()) {
+        if (!$this->getUser() ) {
             return $this->redirectToRoute('app_login');
+        }
+
+        if ($this->getUser()->isActif() == 0) {
+            return $this->redirectToRoute('app_welcome');
         }
 
         $participants = $participantRepository->findAll();

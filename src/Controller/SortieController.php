@@ -105,15 +105,42 @@ class SortieController extends AbstractController
     public function publier(SortiesRepository $sortiesRepository, EtatRepository $etatRepository, SluggerInterface $slugger, Request $request, EntityManagerInterface $entityManager, $id = null): Response
     {
 
-            $sortie = $sortiesRepository->find($id);
+        $sortie = $sortiesRepository->find($id);
 
+        if($sortie->getEtat()->getId() == 4) {
             $sortie->setEtat($etatRepository->find(3));
 
             $entityManager->persist($sortie);
             $entityManager->flush();
-
+        }
             return $this->redirectToRoute('app_accueil');
+
+
         }
 
+    #[Route('/sortie/annuler/{id}', name: 'app_sortie_annuler', requirements: ['id' => '\d+'])]
+    public function supprimer(SortiesRepository $sortiesRepository,  Request $request, EntityManagerInterface $entityManager, $id = null): Response
+    {
+        $sortie = $sortiesRepository->find($id);
+        if ($sortie) {
+            $entityManager->remove($sortie);
+            $entityManager->flush();
+            $this->addFlash('success', 'La sortie a bien été supprimé');
+        } else {
+            $this->addFlash('danger', 'La sortie n\'existe pas');
+        }
+        return $this->redirectToRoute('app_accueil');
+    }
+
+    #[Route('/sortie/inscription/{id}', name: 'app_sortie_inscription', requirements: ['id' => '\d+'])]
+    public function inscription(SortiesRepository $sortiesRepository, ParticipantRepository $participantRepository, EtatRepository $etatRepository, Request $request, EntityManagerInterface $entityManager, $id = null): Response
+    {
+
+        $sortie = $sortiesRepository->find($id);
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_accueil');
+    }
 
 }

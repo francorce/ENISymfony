@@ -23,13 +23,9 @@
             <div class="col">
                 {{ form_row(formulaireParticipant.pseudo) }}
             </div>
-            <div class="col">
-                {{ form_row(formulaireParticipant.photo) }}
-            </div>
+
 
         </div>
-            {{ form_row(formulaireParticipant.password) }}
-
         <h3>A quel campus est relié ce participant ?</h3>
         {{ form_rest(formulaireParticipant) }}
         {% if app.request.get('_route') == 'app_admin_participant_ajouter' %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Premiere connexion{% endblock %}
+
+{% block contenu %}
+    <div class="container">
+        <h1>Premiere connexion, Veuillez modifier votre mot de passe svp</h1>
+            {{ participant.id }}
+            {{ form_start(formulaireFirst) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(formulaireFirst.password) }}
+                </div>
+                <h1>Vous pouvez également changer votre photo si vous le souhaitez
+                    et choisir de la rendre publique ou non</h1>
+                <div class="col-md-6">
+                    {{ form_row(formulaireFirst.photo) }}
+                </div>
+            </div>
+            {{ form_rest(formulaireFirst) }}
+
+            <input type="hidden" name="_target_path" value="{{ path('app_accueil') }}"/>
+
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier Mot de passe</button>
+            </div>
+            {{ form_end(formulaireFirst) }}
+    </div>
+{% endblock %}
