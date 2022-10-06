@@ -2,39 +2,32 @@
 
 namespace App\Form;
 
-use App\Entity\Participant;
+use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class ParticipantType extends AbstractType
+class SortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-            ])
-            ->add('email')
-            //->add('roles')
             ->add('nom')
-            ->add('pseudo')
-            ->add('prenom')
-            ->add('telephone')
-//            ->add('admin')
-//            ->add('actif')
-            ->add('photo', FileType::class, [
-                'label' => 'photo',
+            ->add('datedebut')
+            ->add('duree')
+            ->add('datecloture', DateType::class, [
+                'label' => 'Date limite d\'inscription',
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker'],
+            ])
+            ->add('nbinscriptionsmax')
+            ->add('descriptioninfos',)
+            ->add('urlPhoto', FileType::class, [
+                'label' => 'urlPhoto',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
 
@@ -62,22 +55,38 @@ class ParticipantType extends AbstractType
                     'accept' => '.jpg, .jpeg, .png, .gif, .webp',
                 ],
             ])
-            ->add('estRattache', EntityType::class,[
+            //->add('etat')
+            ->add('lieux')
+            ->add('etablissement', EntityType::class,[
                 'class' => 'App\Entity\Site',
-                'label' => ' ',
-                'choice_label' => function($ville) {
-                    return $ville->getNomSite();
+                'label' => 'Campus Organisateur    ',
+                'choice_label' => function($participant) {
+                    //getPseudo et nom et prenom
+
+                    return $participant->__toString();
                 },
                 'multiple' => false,
                 'expanded' => false
             ])
+            ->add('participant', EntityType::class,[
+                'class' => 'App\Entity\Participant',
+                'label' => 'Organisateur    ',
+                'choice_label' => function($participant) {
+                //getPseudo et nom et prenom
+
+                    return $participant->__toString();
+                },
+                'multiple' => false,
+                'expanded' => false
+            ])
+            //->add('participants')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Participant::class,
+            'data_class' => Sortie::class,
         ]);
     }
 }

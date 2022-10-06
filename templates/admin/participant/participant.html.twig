@@ -30,6 +30,7 @@
                     <th scope="col">Telephone</th>
                     <th scope="col">Email</th>
                     <th scope="col">Pseudo</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">Campus lié</th>
                 </tr>
                 </thead>
@@ -42,6 +43,7 @@
                         <td>{{ participant.telephone }}</td>
                         <td>{{ participant.email }}</td>
                         <td><a href="{{ path('app_admin_afficherParticipant', {id:participant.id }) }}">{{ participant.pseudo }}</a></td>
+                        <td><img class="" style="height: 150px; width: 150px;" src="{{ asset('img/') }}{{ participant.photo }}"></td>
                         <td>{{ participant.estRattache }}</td>
                         <td>
                             <a href="{{ path('app_admin_participant_modifier', {id:participant.id }) }}"

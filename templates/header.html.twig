@@ -28,6 +28,7 @@
                     </ul>
                 </li>
 
+
             {% if app.user %}
                 <a href="{{ path('app_logout') }}"<button style="margin: 10px;" class="btn btn-outline-success" type="submit">Déconnexion</button></a>
             {% else %}
@@ -36,4 +37,11 @@
         </div>
     </div>
 </nav>
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
 

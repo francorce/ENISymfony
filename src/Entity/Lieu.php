@@ -40,7 +40,10 @@ class Lieu
     {
         return $this->id;
     }
-
+    public function __toString()
+    {
+        return $this->rue;
+    }
     public function getRue(): ?string
     {
         return $this->rue;

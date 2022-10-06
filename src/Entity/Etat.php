@@ -18,7 +18,7 @@ class Etat
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'état', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     public function __construct()
@@ -59,7 +59,7 @@ class Etat
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties->add($sorty);
-            $sorty->setétat($this);
+            $sorty->setetat($this);
         }
 
         return $this;
@@ -69,8 +69,8 @@ class Etat
     {
         if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getétat() === $this) {
-                $sorty->setétat(null);
+            if ($sorty->getetat() === $this) {
+                $sorty->setetat(null);
             }
         }
 

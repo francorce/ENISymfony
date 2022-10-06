@@ -21,6 +21,12 @@ class AccueilController extends AbstractController
                           LieuxRepository       $lieuxRepository,
                           ParticipantRepository $participantRepository): Response
     {
+
+        //if user not logged, redirect to login page
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $participants = $participantRepository->findAll();
         $lieux = $lieuxRepository->findAll();
         $etats = $etatRepository->findAll();

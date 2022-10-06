@@ -39,7 +39,7 @@ class Sortie
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etat $état = null;
+    private ?Etat $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Lieu $lieux = null;
@@ -149,14 +149,14 @@ class Sortie
         return $this;
     }
 
-    public function getétat(): ?Etat
+    public function getetat(): ?Etat
     {
-        return $this->état;
+        return $this->etat;
     }
 
-    public function setétat(?Etat $état): self
+    public function setetat(?Etat $etat): self
     {
-        $this->état = $état;
+        $this->etat = $etat;
 
         return $this;
     }
