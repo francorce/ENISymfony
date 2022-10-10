@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ModifierMotDePasseProfileType;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,42 +22,72 @@ class ProfileController extends AbstractController
         $profile = $this->getUser();
 
         return $this->render('profile/profile.html.twig', [
-            'id'=>$id,
+            'id' => $id,
             'participants' => $participants,
-            'profile'=>$profile
+            'profile' => $profile
         ]);
     }
 
     #[Route('/profileModifier', name: 'app_profile_modifier')]
-    public function modif(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request, ParticipantRepository $participantRepository): Response
+    public function modif(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request): Response
     {
         $participants = $this->getUser();
         $form = $this->createForm(ParticipantType::class, $participants);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $lieu = $form->getData();
+            $profile = $form->getData();
 
-            $participants->setPassword($hasher->hashPassword($participants, $participants->getPassword()));
-
-            if(!$this->isGranted('ROLE_ADMIN')){
+            if (!$this->isGranted('ROLE_ADMIN')) {
                 $participants->setRoles(['ROLE_USER']);
-            }
-            else{
+            } else {
                 $participants->setRoles(['ROLE_ADMIN']);
             }
 
 
-            $entityManager->persist($lieu);
+            $entityManager->persist($profile);
             $entityManager->flush();
             if ($request->attributes->get('_route') == 'app_profile') {
                 $this->addFlash(
                     'success',
-                    'participant modifié avec succès'
+                    'Profile modifié avec succès'
                 );
             }
             return $this->redirectToRoute('app_accueil');
         }
         return $this->render('profile/profileModif.html.twig', [
+            'controller_name' => 'ProfileController',
+            'formulaireProfile' => $form->createView(),
+
+        ]);
+
+
+    }
+
+    #[Route('/MotDePasse', name: 'app_mdp_modifier')]
+    public function motDePasse(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $participants = $this->getUser();
+
+        $form = $this->createForm(ModifierMotDePasseProfileType::class, $participants);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $profileMDP = $form->getData();
+
+
+            $participants->setPassword($hasher->hashPassword($participants, $participants->getPassword()));
+
+
+            $entityManager->persist($profileMDP);
+            $entityManager->flush();
+            if ($request->attributes->get('_route') == 'app_profile_modifier') {
+                $this->addFlash(
+                    'success',
+                    'Mot de passe modifié avec succès'
+                );
+            }
+            return $this->redirectToRoute('app_accueil');
+        }
+        return $this->render('profile/motDePasse.html.twig', [
             'controller_name' => 'ProfileController',
             'formulaireProfile' => $form->createView(),
 

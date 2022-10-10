@@ -13,12 +13,6 @@
                 {{ form_row(formulaireProfile.pseudo) }}
             </div>
             <div class="col">
-                {{ form_row(formulaireProfile.prenom) }}
-            </div>
-            <div class="col">
-                {{ form_row(formulaireProfile.nom) }}
-            </div>
-            <div class="col">
                 {{ form_row(formulaireProfile.telephone) }}
             </div>
             <div class="col">
@@ -31,9 +25,13 @@
         </div>
         {{ form_rest(formulaireProfile) }}
 
-            <div class="example-wrapper">
-                <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier</button>
-            </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-success rounded mx-auto d-block" type="submit">Enregistrer</button>
+
+            <a href="{{ path('app_mdp_modifier') }}" class="btn btn-primary rounded mx-auto d-block" type="submit">Modifier mot de passe</a>
+        </div>
+
+
 
 
         {{ form_end(formulaireProfile) }}

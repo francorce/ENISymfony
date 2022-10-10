@@ -6,8 +6,6 @@ use App\Entity\Participant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -26,10 +24,10 @@ class ParticipantType extends AbstractType
 //                'second_options' => ['label' => 'Repeat Password'],
 //            ])
             ->add('email')
-            //->add('roles')
-            ->add('nom')
+//          ->add('roles')
+//          ->add('nom')
             ->add('pseudo')
-            ->add('prenom')
+//          ->add('prenom')
             ->add('telephone')
 //            ->add('admin')
 //            ->add('actif')
@@ -62,16 +60,16 @@ class ParticipantType extends AbstractType
                 'attr' => [
                     'accept' => '.jpg, .jpeg, .png, .gif, .webp',
                 ],
-            ])
-            ->add('estRattache', EntityType::class, [
-                'class' => 'App\Entity\Site',
-                'label' => ' ',
-                'choice_label' => function ($ville) {
-                    return $ville->getNomSite();
-                },
-                'multiple' => false,
-                'expanded' => false
             ]);
+//            ->add('estRattache', EntityType::class, [
+//                'class' => 'App\Entity\Site',
+//                'label' => ' ',
+//                'choice_label' => function ($ville) {
+//                    return $ville->getNomSite();
+//                },
+//                'multiple' => false,
+//                'expanded' => false
+//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
