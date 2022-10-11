@@ -24,7 +24,7 @@ class ParticipantType extends AbstractType
 //                'second_options' => ['label' => 'Repeat Password'],
 //            ])
             ->add('email')
-//          ->add('roles')
+    //          ->add('roles')
 //          ->add('nom')
             ->add('pseudo')
 //          ->add('prenom')

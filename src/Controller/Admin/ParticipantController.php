@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Bien;
 use App\Entity\Participant;
+use App\Form\AdminParticipantType;
 use App\Form\ParticipantType;
 use App\Form\PremiereConnexionType;
 use App\Repository\ParticipantRepository;
@@ -68,7 +69,7 @@ class ParticipantController extends AbstractController
             //$bien = $entityManager->getRepository(Bien::class)->find($request->attributes->get('id'));
         }
 
-        $form = $this->createForm(ParticipantType::class, $participant);
+        $form = $this->createForm(AdminParticipantType::class, $participant);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
