@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @extends ServiceEntityRepository<Participant>
@@ -14,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Participant[]    findAll()
  * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantRepository extends ServiceEntityRepository
+class ParticipantRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,6 +39,23 @@ class ParticipantRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function loadUserByIdentifier(string $usernameOrEmail): ?Participant
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Entity\Participant u
+                WHERE u.email = :query
+                OR u.pseudo = :query'
+        )
+            ->setParameter('query', $usernameOrEmail)
+            ->getOneOrNullResult();
     }
 
 //    /**
