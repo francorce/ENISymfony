@@ -5,7 +5,7 @@
 {% block contenu %}
 
     <div class="container">
-        <h1>Mon profil</h1>
+        <h1>Mot de passe</h1>
         {{ form_start(formulaireProfile) }}
         <div class="row">
 
@@ -15,13 +15,11 @@
 
         </div>
         {{ form_rest(formulaireProfile) }}
-
         <div class="example-wrapper">
-            <button class="btn btn-success rounded mx-auto d-block" type="submit">Modifier</button>
+            <button class="btn btn-success rounded mx-auto d-block" type="submit" >Valider</button>
         </div>
-
-
         {{ form_end(formulaireProfile) }}
+
     </div>
 
 {% endblock %}

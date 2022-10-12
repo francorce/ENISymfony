@@ -16,6 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProfileController extends AbstractController
 {
+
     #[Route('/profile/{id}', name: 'app_profile', requirements: ['id' => '\d+'])]
     public function index(ParticipantRepository $participantRepository, $id = null): Response
     {
@@ -31,7 +32,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profileModifier', name: 'app_profile_modifier')]
-    public function modif(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+    public function modif(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
     {
         $participants = $this->getUser();
         $form = $this->createForm(ParticipantType::class, $participants);
@@ -56,9 +57,6 @@ class ProfileController extends AbstractController
             }
 
             $profile = $form->getData();
-
-            $photoFile = $form->get('photo')->getData();
-
 
 
             if (!$this->isGranted('ROLE_ADMIN')) {
@@ -87,8 +85,8 @@ class ProfileController extends AbstractController
 
     }
 
-    #[Route('/MotDePasse', name: 'app_mdp_modifier')]
-    public function motDePasse(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/profileModifier/MotDePasse', name: 'app_mdp_modifier')]
+    public function motDePasse(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager, Request $request ): Response
     {
         $participants = $this->getUser();
 
@@ -97,9 +95,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $profileMDP = $form->getData();
 
-
             $participants->setPassword($hasher->hashPassword($participants, $participants->getPassword()));
-
 
             $entityManager->persist($profileMDP);
             $entityManager->flush();
