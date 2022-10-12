@@ -27,7 +27,7 @@ class Lieu
     //data class to null
 
     #[ORM\ManyToOne(inversedBy: 'lieus')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Ville $nom_ville = null;
 
     #[ORM\OneToMany(mappedBy: 'lieux', targetEntity: Sortie::class)]

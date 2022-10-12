@@ -19,9 +19,11 @@ class Site
     private ?string $nom_site = null;
 
     #[ORM\OneToMany(mappedBy: 'estRattache', targetEntity: Participant::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $participants;
 
     #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Sortie::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $sorties;
 
     public function __construct()

@@ -38,18 +38,18 @@ class Sortie
     private ?string $urlPhoto = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Etat $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Lieu $lieux = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Site $etablissement = null;
 
     #[ORM\ManyToOne(inversedBy: 'organisateur')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Participant $participant = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'estInscrit')]
