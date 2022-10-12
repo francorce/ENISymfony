@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SiteController !{% endblock %}
+
+{% block contenu %}
+
+<div class="container">
+
+    {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/> #}
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12">
+
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <h1>Annuler une sortie</h1><br><br>
+            <p style="font-size: 20px">
+            Nom de la sortie : {{ sortie.nom }}
+            <br><br>
+            Date de la sortie : {{ sortie.dateDebut|date('d/m/Y') }}
+            <br><br>
+            Campus organisateur : {{ sortie.etablissement }}
+            <br><br>
+            Lieu de la sortie : {{ sortie.lieux }}
+            </p>
+            {{ form_start(formulaireAnnulation) }}
+            <div class="col">
+                {{ form_row(formulaireAnnulation.MotifAnnulation) }}
+            </div>
+            <div class="example-wrapper">
+                <button class="btn btn-success rounded mx-auto d-block" type="submit">Enregistrer</button>
+            </div>
+
+
+            {{ form_end(formulaireAnnulation) }}
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+
+        </div>
+    </div>
+
+    </div>
+
+
+    {% endblock %}

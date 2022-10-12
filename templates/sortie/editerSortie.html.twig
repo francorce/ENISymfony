@@ -4,51 +4,53 @@
 
 {% block contenu %}
 
-    <div class="container">
-        <h1>Créer une sortie</h1>
-        {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/> #}
-        <div class="row gx-1 ">
+<div class="container">
+    <h1>Créer une sortie</h1>
+    {#        <img class="rounded mx-auto d-block" src="{{ asset('formu+agent.png') }}" alt="Symfony!"/> #}
+    <div class="row gx-1 ">
 
 
-            <div class="col-md-6">
-                {{ form_start(formulaireSortie) }}
-                <div class="col">
-                    {{ form_row(formulaireSortie.nom) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.datedebut) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.datecloture) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.nbinscriptionsmax) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.duree) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.descriptioninfos) }}
-                </div>
+        <div class="col-md-6">
+            {{ form_start(formulaireSortie) }}
+            <div class="col">
+                {{ form_row(formulaireSortie.nom) }}
             </div>
-
-            <div class="col-md-6">
-                <div class="col">
-                    {{ form_row(formulaireSortie.participant) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.etablissement) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.urlPhoto) }}
-                </div>
-                <div class="col">
-                    {{ form_row(formulaireSortie.lieux) }}
-                </div>
-
+            <div class="col">
+                {{ form_row(formulaireSortie.datedebut) }}
             </div>
-
+            <div class="col">
+                {{ form_row(formulaireSortie.datecloture) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireSortie.nbinscriptionsmax) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireSortie.duree) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireSortie.descriptioninfos) }}
+            </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="col">
+                {{ form_row(formulaireSortie.etablissement) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireSortie.urlPhoto) }}
+            </div>
+            <div class="col">
+                {{ form_row(formulaireSortie.lieux) }}
+            </div>
+
+
+
+
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Ajouter un lieu qui n'existe pas encore parce que c'est un lieu secret
+    </button>
+    </div>
         {% if app.request.get('_route') == 'app_sortie_ajouter' %}
             <div class="example-wrapper">
                 <button class="btn btn-success rounded mx-auto d-block" type="submit">Ajouter</button>
@@ -61,5 +63,46 @@
 
         {{ form_end(formulaireSortie) }}
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-black-50" id="exampleModalLabel">Ajouter un lieu qui n'existe pas encore parce que c'est un lieu secret</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        {{ form_start(formulaireLieu) }}
+                        <div class="row">
+                            <div class="col">
+                                <div class="text-black-50">Rue</div>
+                                {{ form_row(formulaireLieu.rue) }}
+                            </div>
+                            <div class="col">
+                                <div class="text-black-50">Latitude</div>
+                                {{ form_row(formulaireLieu.latitude) }}
+                            </div>
+                            <div class="col">
+                                <div class="text-black-50">Longitude</div>
+                                {{ form_row(formulaireLieu.longitude) }}
+                            </div>
+                        </div>
 
-{% endblock %}
+                        <h3 class="mt-4 text-black-50">Dans quel ville ? </h3>
+                        {{ form_rest(formulaireLieu) }}
+                        <br>
+                        <div class="example-wrapper">
+                            <button class="btn btn-success rounded mx-auto d-block" type="submit">Ajouter</button>
+                        </div>
+                        {{ form_end(formulaireLieu) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

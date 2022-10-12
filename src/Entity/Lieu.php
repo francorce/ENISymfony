@@ -24,6 +24,8 @@ class Lieu
     #[ORM\Column]
     private ?float $longitude = null;
 
+    //data class to null
+
     #[ORM\ManyToOne(inversedBy: 'lieus')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ville $nom_ville = null;
@@ -43,6 +45,11 @@ class Lieu
     public function __toString()
     {
         return $this->rue;
+    }
+
+    public function nomVilleAndRue(): string
+    {
+        return $this->nom_ville . ' - ' . $this->rue;
     }
     public function getRue(): ?string
     {

@@ -50,7 +50,7 @@ class ProfileController extends AbstractController
                         $this->getParameter('photo_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {
+                } catch (FileException $e)   {
                     // ... handle exception if something happens during file upload
                 }
                 $participants->setPhoto($newFilename);

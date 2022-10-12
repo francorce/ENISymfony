@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block contenu %}
+    <div class="align-items-end">
+        <div>Date du jour : {{ 'now'|date('d/m/Y H:i') }}</div>
+        <div class="float-right">
+            {% if app.user %}
+                Participant : {{ app.user.prenom }} {{ app.user.nom|first }}.
+            {% else %}
+                {{ '' }}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <div class="example-wrapper">
+
+        <h1>Sortir.com</h1>
+        <hr>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a
+                    href="{{ path('app_accueil') }}"
+                    class="btn btn-success btn-lg">Retour aux sorties non archivées
+            </a>
+        {% endif %}
+        <hr>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Nom de la sortie</td>
+                <td>Date de la sortie</td>
+                <td>Clôture</td>
+                <td>Inscrits/places</td>
+                <td>Etat</td>
+                <td>Inscrit</td>
+                <td>Organisateur</td>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            {% for sortie in sorties %}
+                <tbody class="answer">
+                <tr>
+                    <td>{{ sortie.id }}</td>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.datedebut | date("d/m/Y H:m") }}</td>
+                    <td>{{ sortie.datecloture | date("d/m/Y") }}</td>
+                    <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat }}</td>
+                    <td>
+                        {% if app.user in sortie.participants %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('app_profile', {id:sortie.participant.id }) }}">{{ sortie.participant }}</a>
+                    </td>
+                    <td>
+                            <a
+                                    href="{{ path('app_sortie_detail', {'id': sortie.id}) }}"
+                                    class="btn btn-primary btn-sm">Afficher
+                            </a>
+                    </td>
+
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

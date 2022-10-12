@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +31,7 @@ class SortieType extends AbstractType
                 'label' => 'urlPhoto',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-
+                'data_class' => null,
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
                 'required' => false,
@@ -56,7 +57,14 @@ class SortieType extends AbstractType
                 ],
             ])
             //->add('etat')
-            ->add('lieux')
+            ->add('lieux', EntityType::class,[
+                'class' => 'App\Entity\Lieu',
+                'choice_label' => function($lieux) {
+                    return $lieux->nomVilleAndRue();
+                },
+                'multiple' => false,
+                'expanded' => false
+            ])
             ->add('etablissement', EntityType::class,[
                 'class' => 'App\Entity\Site',
                 'label' => 'Campus Organisateur    ',
@@ -68,17 +76,25 @@ class SortieType extends AbstractType
                 'multiple' => false,
                 'expanded' => false
             ])
-            ->add('participant', EntityType::class,[
-                'class' => 'App\Entity\Participant',
-                'label' => 'Organisateur    ',
-                'choice_label' => function($participant) {
-                //getPseudo et nom et prenom
-
-                    return $participant->__toString();
-                },
-                'multiple' => false,
-                'expanded' => false
-            ])
+//            ->add('lieux', CollectionType::class, [
+//                'entry_type' => LieuType::class,
+//                'allow_add' => true,
+//                'allow_delete' => true,
+//                'delete_empty' => true,
+//                'by_reference' => false,
+//                'label' => false
+//            ]);
+//            ->add('participant', EntityType::class,[
+//                'class' => 'App\Entity\Participant',
+//                'label' => 'Organisateur    ',
+//                'choice_label' => function($participant) {
+//                //getPseudo et nom et prenom
+//
+//                    return $participant->__toString();
+//                },
+//                'multiple' => false,
+//                'expanded' => false
+//            ])
             //->add('participants')
         ;
     }

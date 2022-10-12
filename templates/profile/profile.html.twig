@@ -13,7 +13,7 @@
                 <label>Nom : {{ participants.nom }}</label><br>
 {#                <label>Téléphone : {{ participants.telephone }}</label><br>#}
 {#                <label>Email : {{ participants.email }}</label><br>#}
-                {% if participants.partagePhoto %}
+                {% if participants.partagePhoto or app.user.id == participants.id %}
                 <label><img class="" style="height: 150px; width: 150px;" src="{{ asset('img/') }}{{ participants.photo }}"></label><br>
                 {% endif %}
                 <a href="{{ path('app_accueil') }}" class="btn btn-primary">Retour</a>

@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -37,6 +39,29 @@ class SortiesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+
+
+
+    //make a function to filter the sorties
+    public function findAllVisibleQuery($search)
+    {
+        $query = $this->findVisibleQuery();
+        if ($search != null) {
+                $query = $query
+                    ->andWhere('p.nom like :nom')
+                    ->setParameter('nom', '%'.$search.'%');
+
+        }
+        return $query->getQuery()->getResult();
+
+    }
+
+    public function findVisibleQuery(): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.archived = false');
     }
 
 //    /**

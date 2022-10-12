@@ -34,7 +34,7 @@ class Sortie
     #[ORM\Column(length: 500)]
     private ?string $descriptioninfos = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(length: 500, nullable: true)]
     private ?string $urlPhoto = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
@@ -54,6 +54,12 @@ class Sortie
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'estInscrit')]
     private Collection $participants;
+
+    #[ORM\Column]
+    private ?bool $archived = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $MotifAnnulation = null;
 
     public function __construct()
     {
@@ -226,6 +232,30 @@ class Sortie
         if ($this->participants->removeElement($participant)) {
             $participant->removeEstInscrit($this);
         }
+
+        return $this;
+    }
+
+    public function isArchived(): ?bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): self
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->MotifAnnulation;
+    }
+
+    public function setMotifAnnulation(?string $MotifAnnulation): self
+    {
+        $this->MotifAnnulation = $MotifAnnulation;
 
         return $this;
     }

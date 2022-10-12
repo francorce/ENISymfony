@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\AnnulationMotifType;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuxRepository;
@@ -41,17 +44,32 @@ class SortieController extends AbstractController
 
     #[Route('/sortie/ajouter', name: 'app_sortie_ajouter')]
     #[Route('/sortie/modifier/{id}', name: 'app_sortie_modifier', requirements: ['id' => '\d+'])]
-    public function editer(SortiesRepository $sortiesRepository, EtatRepository $etatRepository, SluggerInterface $slugger, Request $request, EntityManagerInterface $entityManager, $id = null): Response
+    public function editer(SortiesRepository $sortiesRepository, EtatRepository $etatRepository, LieuxRepository $lieuxRepository, SluggerInterface $slugger, Request $request, EntityManagerInterface $entityManager, $id = null): Response
     {
 
         if ($request->attributes->get('_route') == 'app_sortie_ajouter') {
 
             $sortie = new Sortie();
+            $sortie->setParticipant($this->getUser());
+            $sortie->setArchived(false);
 
 
         } else {
             $sortie = $sortiesRepository->find($id);
             //$bien = $entityManager->getRepository(Bien::class)->find($request->attributes->get('id'));
+        }
+
+        $lieu = new lieu();
+        $form2 = $this->createForm(LieuType::class, $lieu);
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $lieu = $form2->getData();
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Lieu ajouté avec succès'
+            );
         }
 
         $form = $this->createForm(SortieType::class, $sortie);
@@ -95,9 +113,11 @@ class SortieController extends AbstractController
             }
             return $this->redirectToRoute('app_accueil');
         }
+
         return $this->render('sortie/editerSortie.html.twig', [
             'controller_name' => 'SortieController',
             'formulaireSortie' => $form->createView(),
+            'formulaireLieu' => $form2->createView(),
         ]);
     }
 
@@ -122,21 +142,61 @@ class SortieController extends AbstractController
     public function supprimer(SortiesRepository $sortiesRepository,  Request $request, EntityManagerInterface $entityManager, $id = null): Response
     {
         $sortie = $sortiesRepository->find($id);
-        if ($sortie) {
-            $entityManager->remove($sortie);
-            $entityManager->flush();
-            $this->addFlash('success', 'La sortie a bien été supprimé');
-        } else {
-            $this->addFlash('danger', 'La sortie n\'existe pas');
-        }
-        return $this->redirectToRoute('app_accueil');
+        //send the id to the route app_sortie_motif_annuler
+        return $this->redirectToRoute('app_sortie_motif_annuler', ['id' => $sortie->getId()]);
     }
+
+    #[Route('/sortie/MotifAnnulation/{id}', name: 'app_sortie_motif_annuler', requirements: ['id' => '\d+'])]
+    public function motifAnnuler(SortiesRepository $sortiesRepository, EtatRepository $etatRepository, SluggerInterface $slugger, Request $request, EntityManagerInterface $entityManager, $id = null): Response
+    {
+
+        $sortie = $sortiesRepository->find($id);
+
+        $form = $this->createForm(AnnulationMotifType::class, $sortie);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $site = $form->getData();
+
+            $sortie->setArchived(true);
+            $entityManager->persist($site);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Sortie archivé avec succès'
+            );
+            return $this->redirectToRoute('app_accueil');
+        }
+        return $this->render('sortie/annuler.html.twig', [
+            'controller_name' => 'SortieController',
+            'formulaireAnnulation' => $form->createView(),
+            "sortie" => $sortie,
+        ]);
+    }
+
 
     #[Route('/sortie/inscription/{id}', name: 'app_sortie_inscription', requirements: ['id' => '\d+'])]
     public function inscription(SortiesRepository $sortiesRepository, ParticipantRepository $participantRepository, EtatRepository $etatRepository, Request $request, EntityManagerInterface $entityManager, $id = null): Response
     {
 
+        $idu = $this->getUser()->getId();
+        $participant = $participantRepository->find($idu);
         $sortie = $sortiesRepository->find($id);
+        $sortie->addParticipant($participant);
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_accueil');
+    }
+
+    #[Route('/sortie/desinscription/{id}', name: 'app_sortie_desinscription', requirements: ['id' => '\d+'])]
+    public function desinscription(SortiesRepository $sortiesRepository, ParticipantRepository $participantRepository, EtatRepository $etatRepository, Request $request, EntityManagerInterface $entityManager, $id = null): Response
+    {
+
+        $idu = $this->getUser()->getId();
+        $participant = $participantRepository->find($idu);
+        $sortie = $sortiesRepository->find($id);
+        $sortie->removeParticipant($participant);
 
         $entityManager->persist($sortie);
         $entityManager->flush();
