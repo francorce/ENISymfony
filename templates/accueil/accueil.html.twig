@@ -69,20 +69,43 @@
 
         <hr>
         Filtrer les sites :
-        <select class="form-select" aria-label="Default select example">
-
+        <select class="form-select" id="filter" aria-label="Default select example" onchange="filter()">
+            <option selected>Aucun</option>
             {% for site in sites %}
 
-                <option selected>{{ site.NomSite }}</option>
+                <option>{{ site.NomSite }}</option>
 
             {% endfor %}
         </select>
+
+
+        <script>
+            const filter = () => {
+                let dropdown, table, rows, cells, sites, filter;
+                dropdown = document.getElementById("filter");
+                table = document.getElementById("tab");
+                rows = table.getElementsByTagName("tr");
+                filter = dropdown.value;
+                for (let row of rows) {
+                    cells = row.getElementsByTagName("td");
+                    sites = cells[2] || null;
+                    if (filter === "Aucun" || !sites || (filter === sites.textContent)) {
+                        row.style.display = "";
+                    }
+                    else {
+                        row.style.display = "none";
+                    }
+                }
+            }
+        </script>
+        
         <hr>
-        <table class="table table-dark">
+        <table class="table table-dark" id="tab">
             <thead>
             <tr>
                 <td>ID</td>
                 <td>Nom de la sortie</td>
+                <td>Sites</td>
                 <td>Date de la sortie</td>
                 <td>Clôture</td>
                 <td>Inscrits/places</td>
@@ -93,10 +116,11 @@
             </tr>
             </thead>
             {% for sortie in sorties %}
-                <tbody class="answer">
+                <tbody class="answer" >
                 <tr>
                     <td>{{ sortie.id }}</td>
                     <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.etablissement }}</td>
                     <td>{{ sortie.datedebut | date("d/m/Y H:i") }}</td>
                     <td>{{ sortie.datecloture | date("d/m/Y H:i") }}</td>
                     <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
