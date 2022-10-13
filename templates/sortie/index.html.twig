@@ -81,6 +81,12 @@
                     <th>Latitude :</th>
                     <td>{{ sortie.lieux.latitude }}</td>
                 </tr>
+                <tr>
+                    {% if sortie.motifAnnulation != null %}
+                        <th><h3>Motif d'annulation :</h3></th>
+                        <th>{{ sortie.motifAnnulation }}</th>
+                    {% endif %}
+                </tr>
                 </tbody>
             </table>
         </div>
