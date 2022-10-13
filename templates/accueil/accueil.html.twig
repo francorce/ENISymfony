@@ -12,7 +12,7 @@
         <div class="row gx-2 ustify-content-start">
 
             <div class="col-lg-3 col-md-6">
-                {% if is_granted('ROLE_ADMIN') %}
+
                     <div class="align-items-end">
                         <div>Date du jour : {{ 'now'|date('d/m/Y H:i') }}</div>
                         <div class="float-right">
@@ -23,6 +23,7 @@
                             {% endif %}
                         </div>
                     </div><br>
+                {% if is_granted('ROLE_ADMIN') %}
                     <a
                             href="{{ path('app_sortie_archive') }}"
                             class="btn btn-success btn-lg">Voir les sorties archivées
